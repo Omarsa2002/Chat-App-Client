@@ -1,0 +1,8 @@
+.home{
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--background-latest);
+    padding: 20px;
+    /* overflow: scroll; */
+}

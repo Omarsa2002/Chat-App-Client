@@ -1,0 +1,98 @@
+.footer{
+    padding-top: calc(var(--mantine-spacing-xl) * 2);
+    padding-bottom: calc(var(--mantine-spacing-xl) * 2);
+    color: var(--second-color);
+    background-color: var(--first-color);
+    border-top: 3px hidden var(--first-color);
+    box-shadow: 0px 4px 4px 5px  var(--primary-color);
+}
+
+.logo {
+    max-width: rem(200px);
+    @media (max-width: 48em) {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  .inter {
+    color: var(--primary-color);
+  }
+  .hub {
+    color: var(--second-color);
+  }
+  .description {
+    margin-top: rem(5px);
+  
+    @media (max-width: 48em) {
+      margin-top: var(--mantine-spacing-xs);
+      text-align: center;
+    }
+  }
+  
+  .inner {
+    display: flex;
+    justify-content: space-between;
+  
+    @media (max-width: 48em) {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  
+  .groups {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    @media (max-width: 48em) {
+      display: none;
+    }
+  }
+  
+  .wrapper {
+    width: rem(160px);
+  }
+  
+  .link {
+    display: block;
+    color: var(--gray-color);
+    font-size: var(--mantine-font-size-sm);
+    padding-top: rem(3px);
+    padding-bottom: rem(3px);
+  
+    &:hover {
+      text-decoration: underline;
+      color: var(--gray-color);
+    }
+  }
+  
+  .title {
+    font-size: var(--mantine-font-size-lg);
+    font-weight: 700;
+    font-family: Greycliff CF, var(--mantine-font-family);
+    margin-bottom: calc(var(--mantine-spacing-xs) / 2);
+    color: var(--second-color);
+  }
+  
+  .afterFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--mantine-spacing-xl);
+    padding-top: var(--mantine-spacing-xl);
+    padding-bottom: var(--mantine-spacing-xl);
+    border-top: rem(1px) solid
+      light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
+  
+    @media (max-width: 48em) {
+      flex-direction: column;
+    }
+  }
+  
+  .social {
+    @media (max-width: 48em) {
+      margin-top: var(--mantine-spacing-xs);
+    }
+  }
+  

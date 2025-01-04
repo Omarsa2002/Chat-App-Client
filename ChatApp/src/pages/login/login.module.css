@@ -1,0 +1,248 @@
+
+.style {
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--background-latest);
+  padding: 20px;
+}
+
+.titleHeader {
+  text-align: center;
+  /* margin-bottom: 30px; */
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--second-color);
+}
+
+.underline {
+  height: 4px;
+  width: 80px;
+  margin: 8px auto;
+  background-color: var(--primary-color);
+  border-radius: 4px;
+  animation: width 2s ease-in-out  alternate-reverse both;
+}
+
+.form {
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  background-color: var(--background-courses);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--primary-color);
+  border: 1px solid var(--outline-field-color);
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: var(--second-color-darkMode);
+}
+
+.field {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: var(--second-color);
+  background-color: transparent;
+  border: 1px solid var(--outline-field-color);
+  border-radius: 5px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.field:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 4px var(--primary-color);
+}
+
+.message {
+  color: red;
+  font-size: 12px;
+  margin-top: -10px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--second-color);
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: var(--outline-field-second);
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--outline-field-second);
+}
+
+.register {
+  text-align: center;
+  /* font-size: 14px; */
+  color: var(--gray-color);
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+.register a {
+  font-weight: 600;
+}
+
+@keyframes maxWidth {
+  0% {
+    width:250px;
+  }
+  100% {
+    width:0px;
+  }
+}
+
+
+@keyframes width {
+0% {
+  width:450px;
+}
+100% {
+  width:0px;
+}
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 28px;
+  }
+
+  .form {
+    padding: 20px;
+  }
+
+  .field {
+    padding: 10px;
+  }
+
+  button[type="submit"] {
+    font-size: 14px;
+  }
+}
+
+
+/* 
+.style{
+    background-color: rgb(172, 208, 217);
+    width: 100%;
+    background-size: cover;
+}
+.titleHeader{
+    text-align: center;
+}
+.title{
+    font-size: 40px; 
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin: 0px;
+    color: var(--gray-color);
+}
+
+.companies{
+  font-size: 25px; 
+  font-weight: 500;
+  letter-spacing: -1px;
+  margin-top: 5px;
+  color:var(--gray-color);
+}
+
+@media (max-width: 450px) {
+  .title{
+    font-size: 30px; 
+    font-weight: 500;
+  }
+  .companies{
+    font-size: 20px; 
+    font-weight: 400;
+    margin-top: 5px;
+  }
+  
+}
+
+.btnGoogle , .label {
+  color: var(--second-color);
+}
+
+
+
+.form{
+    width: auto;
+    padding: 20px 20px;
+    border: 1px solid var(--outline-field-color);
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: -2px -2px 6px var(--form-shadow), 2px 2px 6px var(--form-shadow);
+    background-color:  rgb(64, 92, 99);
+}
+.label{
+    font-weight: 500;   
+}
+
+.field{
+    color: var(--second-color);
+    width: 100%;
+    outline: none;
+    margin-top: 5px;
+    border: 0.5px solid var(--outline-field-color);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.field:focus{
+    box-shadow: -2px -2px 6px var(--form-shadow), 2px 2px 6px var(--form-shadow);
+    
+}
+
+.message{
+    color: red;
+}
+
+.underline{
+    height:5px;
+    margin:5px 15px;
+    background-color:#00a7fbd9;
+    border-radius:6px;
+    animation: width 2s ease-in-out  alternate-reverse both;
+}
+@media  (max-width:600px){
+
+    .underline{
+    animation: maxWidth 1s ease-in-out  alternate-reverse both;
+    }
+}
+
+
+.signing{
+  color: var(--second-color);
+}
+
+.register{
+  font-weight: 500;
+  margin-right: 5px;
+  color: var(--gray-color);
+} */

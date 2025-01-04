@@ -1,0 +1,15 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --primary-color: rgb(34, 139, 230); /* Bright blue for primary actions */
+  --first-color: rgb(20, 20, 20); /* Dark background */
+  --second-color: rgb(245, 245, 245); /* Light text for contrast */
+  --gray-color: rgb(150, 150, 150); /* Muted gray for secondary text */
+  --form-shadow: rgba(0, 0, 0, 0.6); /* Subtle shadow for form fields */
+  --outline-field-color: rgba(255, 255, 255, 0.2); /* Border color for inputs */
+  --outline-field-second: rgb(50, 50, 50); /* Secondary border color */
+  --search-color: rgb(200, 200, 200); /* Muted gray for placeholders */
+  --second-color-darkMode: rgb(230, 230, 230); /* Slightly muted white for dark mode */
+  --background-latest: rgb(30, 30, 30); /* Slightly lighter than the main background */
+  --shadow-card: rgba(0, 0, 0, 0.3); /* Shadow for cards or popups */
+  --background-courses: rgb(40, 40, 40); /* Dark gray for specific sections */
+}
