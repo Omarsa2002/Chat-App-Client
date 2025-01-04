@@ -85,6 +85,7 @@ export function UserInfo() {
               onOpen={() => setUserMenuOpened(true)}
               withinPortal
               radius='5px'
+              offset={20}
             >
               <Menu.Target>
                 <UnstyledButton
