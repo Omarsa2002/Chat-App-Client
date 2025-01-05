@@ -16,15 +16,15 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
-  IconBrandTelegram,
   IconChevronDown,
   IconEdit,
   IconFile,
   IconLogout,
   IconSettings,
-  IconStar,
   IconSwitchHorizontal,
   IconTrash,
+  IconUsersGroup,
+  IconUserPlus
 } from "@tabler/icons-react";
 import {
   HTTP_METHODS,
@@ -86,6 +86,11 @@ export function UserInfo() {
               withinPortal
               radius='5px'
               offset={20}
+              styles={{
+                dropdown:{
+                  backgroundColor:"var(--primary-color)",
+                }
+              }}
             >
               <Menu.Target>
                 <UnstyledButton
@@ -117,40 +122,44 @@ export function UserInfo() {
               </Menu.Target>
               <Menu.Dropdown>
                 <Menu.Item
+                  className={classes.menuItem}
                   onClick={() => navigate("/user_profile")}
                   leftSection={<IconFile style={{ width: rem(16), height: rem(16) }} color={theme.colors.blue[6]} stroke={1.5} />}
                 >
                   Profile
                 </Menu.Item>
                 <Menu.Item
+                  className={classes.menuItem}
                   onClick={handleProfile}
                   leftSection={<IconEdit style={{ width: rem(16), height: rem(16) }} color={theme.colors.blue[6]} stroke={1.5} />}
                 >
                   Edit Profile
                 </Menu.Item>
                 <Menu.Item
+                  className={classes.menuItem}
                   onClick={handleApplication}
-                  leftSection={<IconFile style={{ width: rem(16), height: rem(16) }} color={theme.colors.green[6]} stroke={1.5} />}
+                  leftSection={<IconUsersGroup style={{ width: rem(16), height: rem(16) }} color={theme.colors.green[6]} stroke={1.5} />}
                 >
-                  My Application
+                  Friends
                 </Menu.Item>
                 <Menu.Item
+                  className={classes.menuItem}
                   onClick={() => { location.href = "/chat"; }}
-                  leftSection={<IconBrandTelegram style={{ width: rem(16), height: rem(16) }} color={theme.colors.green[6]} stroke={1.5} />}
+                  leftSection={<IconUserPlus style={{ width: rem(16), height: rem(16) }} color={theme.colors.green[6]} stroke={1.5} />}
                 >
-                  Chat
+                  Friends requests
                 </Menu.Item>
-                <Menu.Item
-                  onClick={() => { location.href = "/favorite"; }}
-                  leftSection={<IconStar style={{ width: rem(16), height: rem(16) }} color={theme.colors.yellow[6]} stroke={1.5} />}
-                >
-                  Favorite
-                </Menu.Item>
-                <Menu.Label>Settings</Menu.Label>
-                <Menu trigger="hover">
-                  <Menu.Target>
+                <Menu.Label className={classes.menuLabel}>Settings</Menu.Label>
+                <Menu 
+                  styles={{
+                    dropdown:{
+                      backgroundColor:"var(--primary-color)",
+                    }
+                  }}
+                  trigger="hover">
+                  <Menu.Target className={classes.menuItem}>
                     <Group>
-                      <Menu.Item leftSection={<IconSettings style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}>
+                      <Menu.Item className={classes.menuItem} leftSection={<IconSettings style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}>
                         Account settings
                         <IconChevronDown size="0.9rem" style={{ marginLeft: "15px" }} stroke={1.5} />
                       </Menu.Item>
@@ -158,12 +167,14 @@ export function UserInfo() {
                   </Menu.Target>
                   <Menu.Dropdown>
                     <Menu.Item
+                      className={classes.menuItem}
                       onClick={handleChangePassword}
                       leftSection={<IconSwitchHorizontal style={{ width: rem(16), height: rem(16) }} color={theme.colors[6]} stroke={1.5} />}
                     >
                       Change Password
                     </Menu.Item>
                     <Menu.Item
+                      className={classes.menuItem}
                       color="red"
                       onClick={handleDeleteAccount}
                       leftSection={<IconTrash style={{ width: rem(16), height: rem(16) }} color={theme.colors.red[6]} stroke={1.5} />}
@@ -173,6 +184,7 @@ export function UserInfo() {
                   </Menu.Dropdown>
                 </Menu>
                 <Menu.Item
+                  className={classes.menuItem}
                   onClick={logout}
                   leftSection={<IconLogout style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
                 >
