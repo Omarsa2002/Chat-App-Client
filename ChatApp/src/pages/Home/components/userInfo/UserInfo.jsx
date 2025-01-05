@@ -89,6 +89,7 @@ export function UserInfo() {
               styles={{
                 dropdown:{
                   backgroundColor:"var(--primary-color)",
+                  borderColor:"var(--first-color)"
                 }
               }}
             >
@@ -154,6 +155,7 @@ export function UserInfo() {
                   styles={{
                     dropdown:{
                       backgroundColor:"var(--primary-color)",
+                      borderColor:"var(--first-color)"
                     }
                   }}
                   trigger="hover">

@@ -12,13 +12,13 @@ import {
 } from "@mantine/core";
 // import { useDisclosure } from "@mantine/hooks";
 import {
-  IconBrandTelegram,
   IconEdit,
   IconFile,
   IconLogout,
-  IconStar,
   IconSwitchHorizontal,
   IconTrash,
+  IconUsersGroup,
+  IconUserPlus
 } from "@tabler/icons-react";
 // import {
 //   HTTP_METHODS,
@@ -77,9 +77,7 @@ function UserInfoNav() {
 
           <Group gap={16} mr={5} >
             <Avatar
-              src={
-                userData.data.profileImage
-              }
+              src={userData?.data?.profileImage || "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-9.png"}
               alt={"fff"}
               radius="xl"
               size={40}
@@ -141,7 +139,7 @@ function UserInfoNav() {
 
               {/* user || company application */}
               <Link onClick={handleApplication} className={classes.setting}>
-                <IconFile
+                <IconUsersGroup
                   style={{
                     width: rem(16),
                     height: rem(16),
@@ -150,7 +148,7 @@ function UserInfoNav() {
                   color={theme.colors.green[6]}
                   stroke={1.5}
                 />
-                <Text>My Application</Text>
+                <Text>Friends</Text>
               </Link>
 
               {/* saved jobs */}
@@ -160,7 +158,7 @@ function UserInfoNav() {
                 }}
                 className={classes.setting}
               >
-                <IconBrandTelegram
+                <IconUserPlus
                   style={{
                     width: rem(16),
                     height: rem(16),
@@ -169,27 +167,8 @@ function UserInfoNav() {
                   color={theme.colors.green[6]}
                   stroke={1.5}
                 />
-                <Text>Chat</Text>
+                <Text>Friends requests</Text>
               </Link>
-
-              <Link
-                onClick={() => {
-                  location.href = "/favorite";
-                }}
-                className={classes.setting}
-              >
-                <IconStar
-                  style={{
-                    width: rem(16),
-                    height: rem(16),
-                    marginRight: "3px",
-                  }}
-                  color={theme.colors.yellow[6]}
-                  stroke={1.5}
-                />
-                <Text>Favorite</Text>
-              </Link>
-         
               {/* saved jobs */}
 
               {/* <Menu trigger="hover"> */}
