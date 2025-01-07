@@ -33,11 +33,10 @@ function Users() {
         try {
             await httpRequest(
                 API_CONFIG.endpoints.user.sendFriendRequest,
-                HTTP_METHODS.PUT,
+                HTTP_METHODS.PATCH,
                 contentType.appJson,
                 { requestId: userId }
             );
-            setFriendRequests((prev) => [...prev, { requestId: userId }]); // Update friend requests optimistically
         } catch (err) {
             console.error('Error sending friend request:', err);
         }
@@ -47,12 +46,50 @@ function Users() {
         try {
             await httpRequest(
                 API_CONFIG.endpoints.user.acceptFriendRequest,
-                HTTP_METHODS.PUT,
+                HTTP_METHODS.PATCH,
                 contentType.appJson,
                 { friendId: userId }
             );
             setFriends((prev) => [...prev, { friendId: userId }]); // Update friends optimistically
             setFriendRequests((prev) => prev.filter((req) => req.requestId !== userId)); // Remove from requests
+        } catch (err) {
+            console.error('Error accepting friend request:', err);
+        }
+    };
+    const handleCancelRequestClick = async (userId) => {
+        try {
+            await httpRequest(
+                API_CONFIG.endpoints.user.refuseFriendRequest,
+                HTTP_METHODS.PATCH,
+                contentType.appJson,
+                { requestId: userId }
+            );
+            setFriendRequests((prev) => prev.filter((req) => req.requestId !== userId)); // Remove from requests
+        } catch (err) {
+            console.error('Error accepting friend request:', err);
+        }
+    };
+    const handleCancelFriendRequestClick = async (userId) => {
+        try {
+            await httpRequest(
+                API_CONFIG.endpoints.user.cancelFriendRequest,
+                HTTP_METHODS.PATCH,
+                contentType.appJson,
+                { requestId: userId }
+            );
+        } catch (err) {
+            console.error('Error accepting friend request:', err);
+        }
+    };
+    const handleRemoveFriendClick = async (userId) => {
+        try {
+            await httpRequest(
+                API_CONFIG.endpoints.user.removeFriend,
+                HTTP_METHODS.PATCH,
+                contentType.appJson,
+                { friendId: userId }
+            );
+            setFriends((prev) => prev.filter((req) => req.friendId !== userId)); // Remove from friends
         } catch (err) {
             console.error('Error accepting friend request:', err);
         }
@@ -92,15 +129,28 @@ function Users() {
                                 {user.email || 'No email provided'}
                             </Text>
                             {friends.find((friend) => friend.friendId === user.userId) ? (
-                                <Button onClick={() => handleChatClick(user.userId)}>Chat</Button>
+                                <>
+                                    <Button onClick={() => handleChatClick(user.userId)}>Chat</Button>
+                                    <Button onClick={() => handleRemoveFriendClick(user.userId)}>Remove from friends</Button>
+                                </>
                             ) : friendRequests.find((req) => req.requestId === user.userId) ? (
-                                <Button onClick={() => handleAcceptRequestClick(user.userId)}>
-                                    Accept Friend Request
-                                </Button>
+                                <>
+                                    <Button onClick={() => handleAcceptRequestClick(user.userId)}>
+                                        Accept Friend Request
+                                    </Button>
+                                    <Button onClick={() => handleCancelRequestClick(user.userId)}>
+                                        Remove Friend Request
+                                    </Button>
+                                </>
                             ) : (
-                                <Button onClick={() => handleAddFriendClick(user.userId)}>
-                                    Add Friend
-                                </Button>
+                                <>
+                                    <Button onClick={() => handleAddFriendClick(user.userId)}>
+                                        Add Friend
+                                    </Button>
+                                    <Button onClick={() => handleCancelFriendRequestClick(user.userId)}>
+                                        cancel Friend Request
+                                    </Button>
+                                </>
                             )}
                         </Card>
                     ))}

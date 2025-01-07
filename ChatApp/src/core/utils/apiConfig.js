@@ -16,7 +16,10 @@ const API_CONFIG = {
         allUsers: "user/users",
         userDetails: "user/userdata",
         sendFriendRequest: "user/sendfriendrequest",
-        acceptFriendRequest: "user/acceptfriendrequest"
+        acceptFriendRequest: "user/acceptfriendrequest",
+        cancelFriendRequest: "user/cancelfriendrequest",
+        refuseFriendRequest: "user/refusefriendrequest",
+        removeFriend: "user/removefriend"
       }
   },
 };

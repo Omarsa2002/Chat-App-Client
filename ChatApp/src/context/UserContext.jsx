@@ -57,7 +57,7 @@ export const UserProvider = ({ children }) => {
             const data = await getUserDetails();  // Ensure this returns expected data
             setUserDetails(data.userDetails);
             setFriends(data.friendsDetails || []);
-            setFriendRequests(data.friendRequestsDetails || []);
+            setFriendRequests(data.friendsRequestsDetails || []);
         } catch (err) {
             console.error('Failed to fetch user details:', err);
         } finally {

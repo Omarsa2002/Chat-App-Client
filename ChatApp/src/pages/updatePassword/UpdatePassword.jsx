@@ -14,7 +14,7 @@ function UpdatePassword(){
             email,
             codeType: 'updatePassword'
         }
-        httpRequest(API_CONFIG.endpoints.auth.resendCode, HTTP_METHODS.POST, contentType.appJson, data)
+        httpRequest(API_CONFIG.endpoints.auth.resendCode, HTTP_METHODS.PATCH, contentType.appJson, data)
         .then(()=>{
             showNotification("we sent you a new code", NOTIFICATION_TYPES.SUCCESS);
         })
