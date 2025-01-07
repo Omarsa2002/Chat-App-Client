@@ -1,7 +1,7 @@
 import classes from "./UserInfo.module.css";
-
+import { useUser } from "../../../../context/UserContext.jsx"; 
 import cx from "clsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Avatar,
   Box,
@@ -26,32 +26,19 @@ import {
   IconUsersGroup,
   IconUserPlus
 } from "@tabler/icons-react";
-import {
-  HTTP_METHODS,
-  httpRequest,
-  contentType
-} from "../../../../core/utils/httpRequest.js";
-import APP_CONFIG from "../../../../core/utils/apiConfig.js";
 import { useNavigate } from "react-router-dom";
 
 export function UserInfo() {
+  const { userDetails, isLoading, fetchUserDetails, clearUserData } = useUser();
+  
   const navigate = useNavigate();
-  const user = localStorage.getItem("userInfo");
-  const userData = JSON.parse(user);
-
   function logout() {
     localStorage.clear();
-      httpRequest(APP_CONFIG.endpoints.auth.logout, HTTP_METHODS.POST, contentType.appJson).then(
-      (res) => {
-        console.log(res);
-        //   location.href = "login";
-      }
-    ).catch(
-      (error) => {
-        console.error("Logout request failed", error);
-        //   location.href = "login";
-      }
-    );
+    clearUserData().then(() => {
+        location.href = "/login";  // Redirect after logout process is complete
+    }).catch((err) => {
+        console.error("Error during logout:", err);
+    });
   }
 
   const handleChangePassword = () => {
@@ -71,7 +58,18 @@ export function UserInfo() {
   const theme = useMantineTheme();
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
-
+  useEffect(() => {
+    if (!userDetails &&localStorage.length) {
+      fetchUserDetails();
+    }
+  }, [fetchUserDetails, userDetails]);
+  if (isLoading) {
+    return (
+      <Container size="md" style={{ textAlign: 'center', padding: '100px 0' }}>
+        <Text>Loading...</Text>
+      </Container>
+    );
+  }
   return (
       <div className={classes.header}>
         <Container m={0} pl={0} className={classes.mainSection} size="md">
@@ -100,21 +98,21 @@ export function UserInfo() {
                   <Group gap={16}>
                     <Box></Box>
                     <Avatar
-                      src={userData?.data?.profileImage || "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-9.png"}
+                      src={userDetails?.profileImage || "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-9.png"}
                       alt="User Avatar"
                       radius="xl"
                       size={40}
                     />
                     <div style={{ flex: 1 }}>
                       <Box>
-                        {userData.data.userName ? (
-                          <Text>{userData.data.userName}</Text>
+                        {userDetails.userName ? (
+                          <Text>{userDetails.userName}</Text>
                         ) : (
                           <Text size="sm" fw={500}>user</Text>
                         )}
                       </Box>
-                      <Text c="dimmed" size="xs">
-                        {userData.email}
+                      <Text size="xs">
+                        {userDetails.email}
                       </Text>
                     </div>
                     <IconChevronDown style={{ width: rem(15), height: rem(15) }} stroke={1.5} />

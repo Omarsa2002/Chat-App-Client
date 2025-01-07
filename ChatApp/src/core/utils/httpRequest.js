@@ -29,6 +29,7 @@ export async function httpRequest(
       url: url,
       method: method.toUpperCase(),
       data,
+      withCredentials: true,
       headers: {
         ...headers,
         "Content-Type": contentType,

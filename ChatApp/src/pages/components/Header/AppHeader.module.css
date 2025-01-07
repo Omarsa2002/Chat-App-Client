@@ -1,9 +1,10 @@
 .header {
     height: 90px;
+    width: 100%;
     padding: 0 20px;
     background-color: var(--first-color);
     border-bottom: 1px solid var(--outline-field-color);
-    display: flex;
+    display: table;
     align-items: center;
     justify-content: space-between;
     position: sticky;

@@ -3,6 +3,7 @@ import { Group, Button, Box, Text,  Burger, Drawer, ScrollArea, rem } from '@man
 import { useDisclosure } from "@mantine/hooks";
 import { UserInfo } from '../../Home/components/userInfo/UserInfo';
 import UserInfoNav from '../../Home/components/userInfo/component/userInfoNav/UserInfoNav'
+import Search from '../../Home/components/userInfo/component/search/Search'
 
 function AppHeader() {
 
@@ -35,7 +36,12 @@ function AppHeader() {
                     </Box>
                     <Box className={classes.buttonContainer}>
                         {localStorage.length ? 
-                            (<UserInfo/>):(
+                            (
+                                <>
+                                    <Search/>
+                                    <UserInfo/>
+                                </>
+                            ):(
                             <Group
                                 visibleFrom="md"
                                 justify="flex-end"

@@ -24,33 +24,21 @@ import {
 //   HTTP_METHODS,
 //   httpRequest,
 // } from "../../../../core/utils/httpRequest.js";
-import APP_CONFIG from "../../../../../../core/utils/apiConfig.js";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  HTTP_METHODS,
-  httpRequest,
-} from "../../../../../../core/utils/httpRequest";
+import { useUser } from "../../../../../../context/UserContext.jsx";
+import { useEffect } from "react";
 
 function UserInfoNav() {
   const navigate = useNavigate();
-  const user = localStorage.getItem("userInfo");
-  const userData = JSON.parse(user);
+  const { userDetails, isLoading, fetchUserDetails, clearUserData } = useUser();
 
   function logout() {
-    // navigate to login page
-    if (JSON.parse(localStorage.getItem("userInfo")).data.userId) {
-      location.href = "LoginUser";
-    } else if (JSON.parse(localStorage.getItem("userInfo")).data.companyId) {
-      location.href = "LoginCompanies";
-    } else {
-      location.href = "LoginUser";
-    }
     localStorage.clear();
-    httpRequest(APP_CONFIG.endpoints.user.logout, HTTP_METHODS.POST).then(
-      (res) => {
-        console.log(res);
-      }
-    );
+    clearUserData().then(() => {
+        location.href = "/login";  // Redirect after logout process is complete
+    }).catch((err) => {
+        console.error("Error during logout:", err);
+    });
   }
 
   const handleChangePassword = () => {
@@ -68,8 +56,19 @@ function UserInfoNav() {
   };
 
   const theme = useMantineTheme();
- 
 
+  useEffect(() => {
+    if (!userDetails &&localStorage.length) {
+      fetchUserDetails();
+    }
+  }, [fetchUserDetails, userDetails]);
+  if (isLoading) {
+    return (
+      <Container size="md" style={{ textAlign: 'center', padding: '100px 0' }}>
+        <Text>Loading...</Text>
+      </Container>
+    );
+  }
   return (
     <div className={classes.header}>
       <Container m={0} pl={0} className={classes.mainSection} size="xl">
@@ -77,28 +76,26 @@ function UserInfoNav() {
 
           <Group gap={16} mr={5} >
             <Avatar
-              src={userData?.data?.profileImage || "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-9.png"}
+              src={userDetails?.profileImage || "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-9.png"}
               alt={"fff"}
               radius="xl"
               size={40}
             />
             <div style={{ flex: 1 }}>
-              {user ? (
+              {
                 <>
                   <Box>
-                    {userData.data.userName? (
-                      <Text>{userData.data.userName} </Text>
+                    {userDetails.userName? (
+                      <Text>{userDetails.userName} </Text>
                     ) : (
                     <Text>User</Text>
                     )}
                   </Box>
                   <Text c="dimmed" size="xs">
-                    {userData.email}
+                    {userDetails.email}
                   </Text>
                 </>
-              ) : (
-                <>Company</>
-              )}
+              }
             </div>
           </Group>
 

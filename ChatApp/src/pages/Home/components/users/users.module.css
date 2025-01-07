@@ -1,0 +1,38 @@
+.title{
+    color: var(--primary-color);
+}
+.text{
+    color: var(--second-color);
+}
+
+.cardContainer{
+    margin-top: 50px;
+    padding: 20px;
+}
+.card{
+    background-color: var(--outline-field-second);
+    box-shadow: 0px 2px 4px var(--primary-color);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.card:hover{
+    background-color: rgba(76, 98, 118, 0.9);
+    transform: scale(1.05);
+}
+
+.about{
+    margin-top: 100px;
+    margin-bottom: 100px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: var(--outline-field-second);
+    box-shadow: 0px 2px 4px var(--primary-color);
+}
+
+@media (max-width: 600px) {
+    .card{
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+}
+

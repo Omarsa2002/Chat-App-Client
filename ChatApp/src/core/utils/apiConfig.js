@@ -11,6 +11,12 @@ const API_CONFIG = {
           forgetPassword: "auth/forgetPassword",
           setPassword: "auth/setPassword",
           logout: "auth/logout",
+      },
+      user:{
+        allUsers: "user/users",
+        userDetails: "user/userdata",
+        sendFriendRequest: "user/sendfriendrequest",
+        acceptFriendRequest: "user/acceptfriendrequest"
       }
   },
 };
