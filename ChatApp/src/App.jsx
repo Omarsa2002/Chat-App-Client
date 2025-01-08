@@ -9,6 +9,7 @@ import ActivateEmail from './pages/activateEmail/ActivateEmail';
 import ForgetPassword from './pages/forgetPassword/ForgetPassword';
 import UpdatePassword from './pages/updatePassword/UpdatePassword';
 import AppFooter from './pages/components/Footer/AppFooter';
+import Chat from './pages/chat/Chat';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
             <Route path='/activateemail' Component={ActivateEmail}/>
             <Route path='/forgetpassword' Component={ForgetPassword}/>
             <Route path='/updatepassword' Component={UpdatePassword}/>
+            <Route path='/Chat' Component={Chat}/>
           </Routes>  
         </div>
       <AppFooter/>

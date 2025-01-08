@@ -32,6 +32,10 @@ export const UserProvider = ({ children }) => {
     const [userDetails, setUserDetails] = useState(null);
     const [friends, setFriends] = useState([]);
     const [friendRequests, setFriendRequests] = useState([]);
+    const [requestedFriends, setRequestedFriends] = useState([]);
+    const [friendsCount, setFriendsCount] = useState(0);
+    const [friendsRequestsCount, setFriendsRequestsCount] = useState(0);
+    const [requestedFriendsCount, setRequestedFriendsCount] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
 
     // Clear user data (logout)
@@ -42,6 +46,10 @@ export const UserProvider = ({ children }) => {
             setUserDetails(null);
             setFriends([]);
             setFriendRequests([]);
+            setRequestedFriends([]);
+            setFriendsCount(0);
+            setFriendsRequestsCount(0);
+            setRequestedFriendsCount(0)
             localStorage.clear();  // Ensure you clear localStorage after logout
         } catch (err) {
             console.error("Failed to clear user data:", err);
@@ -58,6 +66,10 @@ export const UserProvider = ({ children }) => {
             setUserDetails(data.userDetails);
             setFriends(data.friendsDetails || []);
             setFriendRequests(data.friendsRequestsDetails || []);
+            setRequestedFriends(data.requestedFriendsDetails || []);
+            setFriendsCount(data.friendsCount || 0);
+            setFriendsRequestsCount(data.friendsRequestsCount || 0);
+            setRequestedFriendsCount(data.requestedFriendsCount || 0);
         } catch (err) {
             console.error('Failed to fetch user details:', err);
         } finally {
@@ -76,6 +88,14 @@ export const UserProvider = ({ children }) => {
                 setFriendRequests,
                 isLoading,
                 fetchUserDetails,
+                requestedFriends,
+                setRequestedFriends,
+                friendsCount,
+                friendsRequestsCount,
+                requestedFriendsCount,
+                setFriendsCount,
+                setFriendsRequestsCount,
+                setRequestedFriendsCount,
                 clearUserData
             }}
         >
