@@ -27,15 +27,18 @@ import {
   IconUserPlus
 } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
-
+//import socket from "../../../../core/utils/socketIo.js";
+import { useSocket } from '../../../../context/SocketContext';
 export function UserInfo() {
   const { userDetails, isLoading, fetchUserDetails, clearUserData } = useUser();
-  
+  const {  socket } = useSocket();
   const navigate = useNavigate();
   function logout() {
     localStorage.clear();
     clearUserData().then(() => {
-        location.href = "/login";  // Redirect after logout process is complete
+      console.log(socket.connected);
+      //socket.disconnect()
+      location.href='/login' // Redirect after logout process is complete
     }).catch((err) => {
         console.error("Error during logout:", err);
     });

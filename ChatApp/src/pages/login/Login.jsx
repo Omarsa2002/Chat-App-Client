@@ -4,16 +4,25 @@ import { Button, Divider, Group} from "@mantine/core";
 import { NOTIFICATION_TYPES, showNotification } from '../../core/helperMethods/showNotification'
 import API_CONFIG from "../../core/utils/apiConfig.js";
 import { contentType, HTTP_METHODS, httpRequest } from "../../core/utils/httpRequest";
-
-function Login(){
+//import socket from '../../core/utils/socketIo.js';
+import { useNavigate } from "react-router-dom";
+// eslint-disable-next-line react/prop-types
+function Login({ setRefreshKey }){
+    const navigate = useNavigate();
     function newLogin(values){
         httpRequest(API_CONFIG.endpoints.auth.login, HTTP_METHODS.POST, contentType.appJson, values)
         .then(res=>{
             showNotification("login Success", NOTIFICATION_TYPES.SUCCESS);
             localStorage.setItem("userInfo", JSON.stringify(res.data));
             localStorage.setItem("isLogged", JSON.stringify(true));
+             // Get connectSocket function
+            //connectSocket();  // Connect socket to the server
+            // socket.connect()
+            //console.log("Socket connected after connect():", socket.connected);
+            //socket.emit('login',res.data)
+            setRefreshKey(prevKey => prevKey + 1);
             setTimeout(() => {
-                location.href = `/`;
+                navigate('/')
             }, 1000);
         })
     }

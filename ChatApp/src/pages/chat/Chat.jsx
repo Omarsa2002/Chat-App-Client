@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Container, Box, Text, ScrollArea, Button, Input } from '@mantine/core';
 import { useUser } from '../../context/UserContext'; // Import your context
+import { useLocation } from 'react-router-dom';
 
 function Chat() {
     const { friends } = useUser(); // Fetch the friends list from the context
     const [selectedFriend, setSelectedFriend] = useState(null);
     const [messages, setMessages] = useState([]); // Chat messages
     const [newMessage, setNewMessage] = useState(''); // Input field value
+    const location = useLocation();
 
     // Fetch chat messages for the selected friend
     const fetchMessages = async (friendId) => {
@@ -34,6 +36,17 @@ function Chat() {
         console.log('message')
     };
 
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const userId = queryParams.get('userId'); // Get userId from query parameters
+        if (userId) {
+            const friend = friends.find((f) => f.friendId === userId); // Find the friend by userId
+            if (friend) {
+              setSelectedFriend(friend); // Set the selected friend
+              fetchMessages(friend.friendId); // Fetch messages for the selected friend
+            }
+        }
+    }, [location.search, friends]); // Run this effect when location.search or friends change
     return (
         <Container size="xl" style={{ display: 'flex', height: '100vh' }}>
             {/* Left Section: Friends List */}

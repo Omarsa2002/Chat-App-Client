@@ -4,8 +4,13 @@ import API_CONFIG from "../../../../core/utils/apiConfig";
 import { contentType, HTTP_METHODS, httpRequest } from "../../../../core/utils/httpRequest";
 import classes from './users.module.css';
 import { useUser } from '../../../../context/UserContext';
+import { useNavigate } from "react-router-dom";
+import { useSocket } from '../../../../context/SocketContext';
 
-function Users() {
+// eslint-disable-next-line react/prop-types
+function Users({setRefreshKey}) {
+    const { socket } = useSocket();
+    const navigate = useNavigate();
     // Access global user data from context
     const { userDetails, 
             friends, setFriends, 
@@ -19,6 +24,7 @@ function Users() {
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+
     // Fetch all users
     const fetchUsers = async () => {
         try {
@@ -38,14 +44,15 @@ function Users() {
     // Handle Add Friend
     const handleAddFriendClick = async (userId) => {
         try {
-            await httpRequest(
+            const response = await httpRequest(
                 API_CONFIG.endpoints.user.sendFriendRequest,
                 HTTP_METHODS.PATCH,
                 contentType.appJson,
                 { requestId: userId }
             );
-            setRequestedFriends((prev) => [...prev, { requestedId: userId }]);
+            setRequestedFriends((prev) => [...prev, { recipientId: userId }]);
             setRequestedFriendsCount((prevCount) => prevCount + 1);
+            socket.emit('AddFrind',{requestId: response.data.data});
         } catch (err) {
             console.error('Error sending friend request:', err);
         }
@@ -60,9 +67,10 @@ function Users() {
                 { friendId: userId }
             );
             setFriends((prev) => [...prev, { friendId: userId }]); // Update friends optimistically
-            setFriendRequests((prev) => prev.filter((req) => req.requestId !== userId)); // Remove from requests
+            setFriendRequests((prev) => prev.filter((req) => req.requesterId !== userId)); // Remove from requests
             setFriendsCount((prevCount) => prevCount + 1);
             setFriendsRequestsCount((prevCount) => prevCount - 1);
+            socket.emit('acceptFriendRequest', {friendId: userId});
         } catch (err) {
             console.error('Error accepting friend request:', err);
         }
@@ -75,8 +83,9 @@ function Users() {
                 contentType.appJson,
                 { requestId: userId }
             );
-            setFriendRequests((prev) => prev.filter((req) => req.requestId !== userId)); // Remove from requests
+            setFriendRequests((prev) => prev.filter((req) => req.requesterId !== userId)); // Remove from requests
             setFriendsRequestsCount((prevCount) => prevCount - 1);
+            socket.emit('refuseFriendRequest', {requesterId: userId})
         } catch (err) {
             console.error('Error accepting friend request:', err);
         }
@@ -89,8 +98,9 @@ function Users() {
                 contentType.appJson,
                 { requestId: userId }
             );
-            setRequestedFriends((prev) => prev.filter((req) => req.requestedId !== userId))
+            setRequestedFriends((prev) => prev.filter((req) => req.recipientId !== userId))
             setRequestedFriendsCount((prevCount) => {prevCount - 1});
+            socket.emit('cancelFriendRequest', {recipientId: userId});
         } catch (err) {
             console.error('Error accepting friend request:', err);
         }
@@ -105,18 +115,55 @@ function Users() {
             );
             setFriends((prev) => prev.filter((req) => req.friendId !== userId)); // Remove from friends
             setFriendsCount((prevCount) => prevCount - 1);
+            socket.emit('removeFriend', {friendId: userId})
         } catch (err) {
             console.error('Error accepting friend request:', err);
         }
     };
     // Handle Chat
     const handleChatClick = (userId) => {
-        console.log('Chat with:', userId);
+        setRefreshKey(prevKey => prevKey + 1);
+        navigate(`/Chat?userId=${userId}`);
+        // console.log('Chat with:', userId);
     };
     // Fetch users on component mount
     useEffect(() => {
         fetchUsers();
     }, []);
+    useEffect(() => {
+        if (!socket) return;
+        const handleOnlineUser = (data) => {
+            if (!data || !data.userId) {
+                console.error('Invalid data received for onlineUser:', data);
+                return;
+            }
+            setUsers((prev) =>
+                prev.map((user) =>
+                    user.userId === data.userId ? { ...user, isOnline: true } : user
+                )
+            );
+            console.log('online', data);
+        };
+        const handleOfflineUser = (data) => {
+            if (!data || !data.userId) {
+                console.error('Invalid data received for offlineUser:', data);
+                return;
+            }
+            setUsers((prev) =>
+                prev.map((user) =>
+                    user.userId === data.userId ? { ...user, isOnline: false } : user
+                )
+            );
+            console.log('offline', data);
+        };
+        socket.on('onlineUser', handleOnlineUser);
+        socket.on('offlineUser', handleOfflineUser);
+        return () => {
+            socket.off('onlineUser', handleOnlineUser);
+            socket.off('offlineUser', handleOfflineUser);
+        };
+    }, [socket]);
+    
     // Render loading, error, or user data
     return (
         <Container size="xl" style={{ textAlign: 'center', padding: '80px 0' }}>
@@ -141,14 +188,14 @@ function Users() {
                                 {user.userName}
                             </Title>
                             <Text className={classes.text} mt="sm">
-                                {user.email || 'No email provided'}
+                                {user.isOnline ? 'Online now' : 'Offline'} 
                             </Text>
                             {friends?.find((friend) => friend.friendId === user.userId) ? (
                                 <>
                                     <Button onClick={() => handleChatClick(user.userId)}>Chat</Button>
                                     <Button onClick={() => handleRemoveFriendClick(user.userId)}>Remove from friends</Button>
                                 </>
-                            ) : friendRequests?.find((req) => req.requestId === user.userId) ? (
+                            ) : friendRequests?.find((req) => req.requesterId === user.userId) ? (
                                 <>
                                     <Button onClick={() => handleAcceptRequestClick(user.userId)}>
                                         Accept Friend Request
@@ -157,7 +204,7 @@ function Users() {
                                         Remove Friend Request
                                     </Button>
                                 </>
-                            ) : requestedFriends?.find(req=> req.requestedId === user.userId)? (
+                            ) : requestedFriends?.find(req=> req.recipientId === user.userId)? (
                                     <Button onClick={() => handleCancelFriendRequestClick(user.userId)}>
                                         cancel Friend Request
                                     </Button>

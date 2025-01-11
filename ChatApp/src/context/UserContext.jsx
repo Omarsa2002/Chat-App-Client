@@ -28,8 +28,10 @@ const logoutUser = async () => {
 };
 
 // Provide UserContext
+// eslint-disable-next-line react/prop-types
 export const UserProvider = ({ children }) => {
     const [userDetails, setUserDetails] = useState(null);
+    const [isOnline, setIsOnline] = useState(false);
     const [friends, setFriends] = useState([]);
     const [friendRequests, setFriendRequests] = useState([]);
     const [requestedFriends, setRequestedFriends] = useState([]);
@@ -64,12 +66,12 @@ export const UserProvider = ({ children }) => {
         try {
             const data = await getUserDetails();  // Ensure this returns expected data
             setUserDetails(data.userDetails);
-            setFriends(data.friendsDetails || []);
-            setFriendRequests(data.friendsRequestsDetails || []);
-            setRequestedFriends(data.requestedFriendsDetails || []);
+            setFriends(data.friends || []);
+            setFriendRequests(data.friendsRequests || []);
+            setRequestedFriends(data.requestsFromMe || []);
             setFriendsCount(data.friendsCount || 0);
             setFriendsRequestsCount(data.friendsRequestsCount || 0);
-            setRequestedFriendsCount(data.requestedFriendsCount || 0);
+            setRequestedFriendsCount(data.requestsFromMesCount || 0);
         } catch (err) {
             console.error('Failed to fetch user details:', err);
         } finally {
@@ -96,7 +98,9 @@ export const UserProvider = ({ children }) => {
                 setFriendsCount,
                 setFriendsRequestsCount,
                 setRequestedFriendsCount,
-                clearUserData
+                clearUserData,
+                isOnline, 
+                setIsOnline
             }}
         >
             {children}
