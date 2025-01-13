@@ -1,0 +1,73 @@
+.chatContainer{
+    display: flex;
+    height: 90vh;
+    border: 1px solid var(--primary-color);
+}
+
+.LeftSectionBox{
+    width: 30%;
+    background-color: var(--background-courses);
+    padding: 20px;
+    border-right: 1px solid var(--primary-color);
+    overflow-Y: auto;
+}
+
+.LeftSectionText{
+    display: flex;
+    background-color: rgb(18, 17, 17);
+    justify-content: space-between;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+}
+
+.LeftSectionBoxText{
+    color: var(--second-color);
+    padding: 5px;
+    background-color: var(--primary-color);
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.friendsScrollArea{
+    height: calc(90vh - 50px);
+    /* color: rgb(52, 49, 49); */
+}
+
+.friendBox{
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid var(--primary-color);
+    color: var(--second-color);
+}
+
+
+.rightSectionBox{
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.rightSectionTitileBox{
+    margin: 10px;
+    display: flex;
+    color: var(--second-color);
+    border: 1px solid var(--primary-color);
+    background-color: var(--background-courses);
+    padding: 5px;
+    border-radius: 5px;
+}
+.rightSectionTitile{
+    color: var(--second-color);
+    margin: 5px;
+}
+.rightSectionName{
+    color: var(--primary-color);
+    margin: 5px;
+    font-weight: bold;
+}

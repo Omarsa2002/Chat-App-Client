@@ -1,3 +1,4 @@
+import classes from './Chat.module.css'
 import { useState, useEffect } from 'react';
 import { Container, Box, Text, ScrollArea, Button, Input } from '@mantine/core';
 import { useUser } from '../../context/UserContext'; // Import your context
@@ -11,7 +12,7 @@ function Chat() {
     const location = useLocation();
 
     // Fetch chat messages for the selected friend
-    const fetchMessages = async (friendId) => {
+    const fetchMessages = async (chatId) => {
         // try {
         //     const response = await httpRequest(
         //         `${API_CONFIG.endpoints.chat.getMessages}/${friendId}`,
@@ -27,7 +28,7 @@ function Chat() {
     // Handle friend selection
     const handleFriendClick = (friend) => {
         setSelectedFriend(friend);
-        fetchMessages(friend.friendId);
+        fetchMessages(friend.chatId);
     };
 
     // Handle sending a new message
@@ -48,30 +49,25 @@ function Chat() {
         }
     }, [location.search, friends]); // Run this effect when location.search or friends change
     return (
-        <Container size="xl" style={{ display: 'flex', height: '100vh' }}>
+        <Container size="xl" className={classes.chatContainer}>
             {/* Left Section: Friends List */}
-            <Box
-                style={{
-                    width: '30%',
-                    backgroundColor: '#f5f5f5',
-                    padding: '10px',
-                    borderRight: '1px solid #ddd',
-                    overflowY: 'auto',
-                }}
-            >
-                <Text weight={700} size="lg" mb="md">
-                    Friends
-                </Text>
-                <ScrollArea style={{ height: 'calc(100vh - 50px)' }}>
+            <Box className={classes.LeftSectionBox}>
+                <div className={classes.LeftSectionText}>
+                    <Text weight={700} className={classes.LeftSectionBoxText}>
+                        Friends
+                    </Text>
+                    <Text weight={700} className={classes.LeftSectionBoxText} >
+                        Groups
+                    </Text>
+
+                </div>
+                <ScrollArea className={classes.friendsScrollArea}>
                     {friends.map((friend) => (
                         <Box
                             key={friend.friendId}
+                            className={classes.friendBox}
                             style={{
-                                padding: '10px',
-                                marginBottom: '10px',
-                                backgroundColor: selectedFriend?.friendId === friend.friendId ? '#ddd' : '#fff',
-                                cursor: 'pointer',
-                                borderRadius: '5px',
+                                backgroundColor: selectedFriend?.friendId === friend.friendId ? 'rgb(74, 74, 74)' : 'rgb(17, 16, 16)',
                             }}
                             onClick={() => handleFriendClick(friend)}
                         >
@@ -80,21 +76,18 @@ function Chat() {
                     ))}
                 </ScrollArea>
             </Box>
-
             {/* Right Section: Chat Interface */}
-            <Box
-                style={{
-                    flex: 1,
-                    padding: '10px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                }}
-            >
+            <Box className={classes.rightSectionBox}>
                 {selectedFriend ? (
                     <>
-                        <Text weight={700} size="lg" mb="md">
-                            Chat with {selectedFriend.friendName}
-                        </Text>
+                        <Box className={classes.rightSectionTitileBox}>
+                            <Text className={classes.rightSectionTitile} weight={700} size="lg">
+                                Chat with
+                            </Text>
+                            <Text className={classes.rightSectionName} weight={700} size="lg">
+                                {selectedFriend.friendName}
+                            </Text>    
+                        </Box>
                         <ScrollArea style={{ flex: 1, marginBottom: '10px' }}>
                             {messages.map((message, index) => (
                                 <Box
