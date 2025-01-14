@@ -21,6 +21,9 @@ const API_CONFIG = {
         cancelFriendRequest: "user/cancelfriendrequest",
         refuseFriendRequest: "user/refusefriendrequest",
         removeFriend: "user/removefriend"
+      },
+      chat:{
+        getChat:"chat/chatmessages"
       }
   },
 };
