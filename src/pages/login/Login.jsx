@@ -15,11 +15,6 @@ function Login({ setRefreshKey }){
             showNotification("login Success", NOTIFICATION_TYPES.SUCCESS);
             localStorage.setItem("userInfo", JSON.stringify(res.data));
             localStorage.setItem("isLogged", JSON.stringify(true));
-             // Get connectSocket function
-            //connectSocket();  // Connect socket to the server
-            // socket.connect()
-            //console.log("Socket connected after connect():", socket.connected);
-            //socket.emit('login',res.data)
             setRefreshKey(prevKey => prevKey + 1);
             setTimeout(() => {
                 navigate('/')

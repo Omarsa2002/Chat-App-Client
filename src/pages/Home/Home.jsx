@@ -6,9 +6,10 @@ import { useUser } from '../../context/UserContext.jsx';
 // eslint-disable-next-line react/prop-types
 export default function Home({setRefreshKey}) {
     const { userDetails } = useUser();
+    const login =  localStorage.getItem("isLogged")
     return (
         <div className={classes.home}>
-            {userDetails ? (
+            {login ? (
                 <Users setRefreshKey={setRefreshKey}/>
             ) : (
                 <NotLogin />

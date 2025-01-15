@@ -34,7 +34,6 @@ export async function httpRequest(
       headers: {
         ...headers,
         "Content-Type": contentType,
-        "Origin":"https://chat-app-client-omarsa2002s-projects.vercel.app"
       }
     });
     printResponse(response);
