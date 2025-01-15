@@ -103,9 +103,9 @@ function AppHeader() {
                     ) : (
                     <Box style={{display:"block"}}>
                         {/* <Group justify="center" grow pb="xl" px="md"> */}
-                            <Button className={classes.button} onClick={() => navigate('/login')}>Login</Button>
-                            <Button className={classes.button} onClick={() => navigate('/signup')}>Sign up</Button>
-                            <Button className={classes.button} onClick={() => location.href='/#about'}>About</Button>
+                            <Button className={classes.navButton} onClick={() => navigate('/login')}>Login</Button>
+                            <Button className={classes.navButton} onClick={() => navigate('/signup')}>Sign up</Button>
+                            <Button className={classes.navButton} onClick={() => location.href='/#about'}>About</Button>
                         {/* </Group> */}
                     </Box>
                     )}
