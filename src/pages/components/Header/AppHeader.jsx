@@ -4,9 +4,10 @@ import { useDisclosure } from "@mantine/hooks";
 import { UserInfo } from '../../Home/components/userInfo/UserInfo';
 import UserInfoNav from '../../Home/components/userInfo/component/userInfoNav/UserInfoNav'
 import Search from '../../Home/components/userInfo/component/search/Search'
+import { useNavigate } from "react-router-dom";
 
 function AppHeader() {
-
+    const navigate = useNavigate();
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
 
     return (
@@ -47,8 +48,8 @@ function AppHeader() {
                                 justify="flex-end"
                                 className={classes.group}
                             >
-                                <Button className={classes.button} onClick={() => location.href='/login'}>Login</Button>
-                                <Button className={classes.button} onClick={() => location.href='/signup'}>Sign up</Button>
+                                <Button className={classes.button} onClick={() => navigate('/login')}>Login</Button>
+                                <Button className={classes.button} onClick={() => navigate('/signup')}>Sign up</Button>
                                 <Button className={classes.button} onClick={() => location.href='/#about'}>About</Button>
                             </Group>
                         )}
@@ -102,9 +103,9 @@ function AppHeader() {
                     ) : (
                     <Box style={{display:"block"}}>
                         {/* <Group justify="center" grow pb="xl" px="md"> */}
-                            <Button className={classes.navButton} onClick={() => location.href='/login'}>Login</Button>
-                            <Button className={classes.navButton} onClick={() => location.href='/signup'}>Sign up</Button>
-                            <Button className={classes.navButton} onClick={() => location.href='/#about'}>About</Button>
+                            <Button className={classes.button} onClick={() => navigate('/login')}>Login</Button>
+                            <Button className={classes.button} onClick={() => navigate('/signup')}>Sign up</Button>
+                            <Button className={classes.button} onClick={() => location.href='/#about'}>About</Button>
                         {/* </Group> */}
                     </Box>
                     )}
