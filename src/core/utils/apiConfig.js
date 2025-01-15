@@ -1,6 +1,6 @@
 const API_CONFIG = {
   //baseUrl: "http://localhost:3000/api/v1/",
-  baseUrl: "https://chat-app-server-virid.vercel.app/api/v1",
+  baseUrl: "https://chat-app-server-virid.vercel.app/api/v1/",
   //socketConnection:"http://localhost:3000",
   socketConnection:"https://chat-app-server-virid.vercel.app",
   secretKey:"",
