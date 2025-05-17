@@ -13,12 +13,12 @@ export const HTTP_METHODS = {
 export const contentType = {
   appJson:"application/json",
   formData:"multipart/form-data"
-}
+};
 
 export async function httpRequest(
   endpoint,
   method = HTTP_METHODS.GET,
-  contentType,
+  ContentType,
   data = {},
   headers = {},
   queryParameters = {},
@@ -33,12 +33,17 @@ export async function httpRequest(
       withCredentials: true,
       headers: {
         ...headers,
-        "Content-Type": contentType,
+        "Content-Type": ContentType || contentType.appJson,
       }
     });
     printResponse(response);
     return response;
   } catch (error) {
+    console.log(error.status, error.status === 401)
+    if(error.status === 401){
+      localStorage.clear();
+      window.location.reload()
+    }
     printError(error);
     if (error.response.data.message) {
       notifications.show({
@@ -57,7 +62,7 @@ export async function httpRequest(
       if(error.response.data.data.activateEmail === false){
         setTimeout(() => {
             location.href = `/activateemail?email=${data.email}`;
-        }, 2000)
+        }, 1000)
       }
     } else {
       notifications.show({
